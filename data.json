@@ -1,0 +1,192 @@
+{
+  "tasks": [],
+  "habits": [
+    {
+      "name": "Study session 60+ min",
+      "days": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "MS Learn / Azure docs review",
+      "days": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Azure hands-on lab",
+      "days": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "LinkedIn engagement",
+      "days": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Review goals and progress",
+      "days": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "study": {
+    "az104": 0,
+    "az500": 0,
+    "sc200": 0
+  },
+  "cp": {
+    "az104": {},
+    "az500": {},
+    "sc200": {}
+  },
+  "notes": [
+    {
+      "id": 1,
+      "title": "Azure RBAC — key roles",
+      "cat": "az",
+      "tags": [
+        "RBAC",
+        "IAM"
+      ],
+      "body": "Owner: Full access + delegation\nContributor: Full access, no role assignment\nReader: View only\nUser Access Admin: Manage user access\n\nBest practice: Least privilege. Scope to resource group not subscription.",
+      "date": "2026-04-15"
+    },
+    {
+      "id": 2,
+      "title": "Defender for Cloud — key concepts",
+      "cat": "sec",
+      "tags": [
+        "Defender",
+        "CSPM"
+      ],
+      "body": "CSPM = Cloud Security Posture Management (free tier available)\nCWPP = Cloud Workload Protection Platform (paid)\n\nSecure Score measures your posture against security recommendations.\nMaps to compliance frameworks: CIS, NIST, PCI DSS.",
+      "date": "2026-04-15"
+    },
+    {
+      "id": 3,
+      "title": "Conditional Access — policy patterns",
+      "cat": "az",
+      "tags": [
+        "AAD",
+        "MFA",
+        "Zero Trust"
+      ],
+      "body": "Block legacy auth — eliminates basic auth protocols\nRequire MFA for all admin accounts\nRequire compliant Intune-enrolled device\nBlock risky sign-ins via Identity Protection integration\n\nAlways test with the What-If tool before setting to Enforce!",
+      "date": "2026-04-15"
+    }
+  ],
+  "scripts": [
+    {
+      "id": 10,
+      "title": "Get Azure AD users with MFA status",
+      "type": "ps",
+      "tags": [
+        "MFA",
+        "Entra ID",
+        "Audit"
+      ],
+      "desc": "Export all users and MFA registration status to CSV for compliance audit.",
+      "code": "Connect-MgGraph -Scopes \"UserAuthenticationMethod.Read.All\"\n$users = Get-MgUser -All\n$results = foreach($u in $users){\n  $methods = Get-MgUserAuthenticationMethod -UserId $u.Id\n  [PSCustomObject]@{\n    UPN = $u.UserPrincipalName\n    MFA = ($methods.Count -gt 1)\n  }\n}\n$results | Export-Csv -Path .\\mfa_report.csv -NoTypeInformation",
+      "date": "2026-04-15"
+    },
+    {
+      "id": 11,
+      "title": "List all Azure role assignments",
+      "type": "az",
+      "tags": [
+        "RBAC",
+        "Audit"
+      ],
+      "desc": "List every role assignment at subscription scope with principal name and role.",
+      "code": "az role assignment list --all \\\n  --query \"[].{Name:principalName,Role:roleDefinitionName,Scope:scope}\" \\\n  --output table",
+      "date": "2026-04-15"
+    },
+    {
+      "id": 12,
+      "title": "Find open inbound NSG rules",
+      "type": "ps",
+      "tags": [
+        "NSG",
+        "Network",
+        "Firewall"
+      ],
+      "desc": "List all NSG rules that allow inbound traffic from Any source address.",
+      "code": "$nsgs = Get-AzNetworkSecurityGroup\nforeach($nsg in $nsgs){\n  $nsg.SecurityRules | Where-Object {\n    $_.Access -eq \"Allow\" -and\n    $_.Direction -eq \"Inbound\" -and\n    $_.SourceAddressPrefix -eq \"*\"\n  } | Select-Object Name, DestinationPortRange\n}",
+      "date": "2026-04-15"
+    }
+  ],
+  "tuts": [
+    {
+      "id": 20,
+      "title": "Enable Microsoft Sentinel and connect data sources",
+      "cat": "az",
+      "tags": [
+        "Sentinel",
+        "SIEM",
+        "Log Analytics"
+      ],
+      "difficulty": "intermediate",
+      "body": "1. Create a Log Analytics workspace in your preferred region\n2. Navigate to Microsoft Sentinel in the Azure portal and click Add\n3. Select your Log Analytics workspace and click Add Microsoft Sentinel\n4. Go to Data connectors in the left menu\n5. Enable key connectors: Azure Active Directory, Microsoft Defender for Cloud, Office 365, Azure Activity\n6. For each connector follow the Prerequisites tab before enabling\n7. Verify data is flowing: Logs > query SigninLogs or AuditLogs\n\nGotcha: Data can take 20-30 minutes to appear after first connection.\nCost tip: Set a daily ingestion cap in your workspace settings to avoid unexpected bills.",
+      "date": "2026-04-15"
+    }
+  ],
+  "skills": {
+    "Azure fundamentals": 60,
+    "Network security": 70,
+    "Identity and access": 50,
+    "SIEM and Sentinel": 40,
+    "Cloud governance": 45,
+    "Leadership presence": 55,
+    "Stakeholder management": 60,
+    "Technical writing": 65
+  },
+  "vis": {},
+  "mil": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "uid": 300,
+  "lastSync": "2026-04-15T16:55:22.310Z"
+}
