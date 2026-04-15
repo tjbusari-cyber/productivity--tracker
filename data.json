@@ -164,8 +164,8 @@
     }
   ],
   "skills": {
-    "Azure fundamentals": 75,
-    "Network security": 75,
+    "Azure fundamentals": 100,
+    "Network security": 80,
     "Identity and access": 50,
     "SIEM and Sentinel": 40,
     "Cloud governance": 45,
@@ -188,5 +188,5 @@
     false
   ],
   "uid": 300,
-  "lastSync": "2026-04-15T16:56:19.142Z"
+  "lastSync": "2026-04-15T16:56:28.964Z"
 }
