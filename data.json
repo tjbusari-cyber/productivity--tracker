@@ -79,7 +79,7 @@
   "notes": [
     {
       "id": 1,
-      "title": "Azure RBAC â key roles",
+      "title": "Azure RBAC key roles",
       "cat": "az",
       "tags": [
         "RBAC",
@@ -90,7 +90,7 @@
     },
     {
       "id": 2,
-      "title": "Defender for Cloud â key concepts",
+      "title": "Defender for Cloud key concepts",
       "cat": "sec",
       "tags": [
         "Defender",
@@ -101,14 +101,14 @@
     },
     {
       "id": 3,
-      "title": "Conditional Access â policy patterns",
+      "title": "Conditional Access policy patterns",
       "cat": "az",
       "tags": [
         "AAD",
         "MFA",
         "Zero Trust"
       ],
-      "body": "Block legacy auth â eliminates basic auth protocols\nRequire MFA for all admin accounts\nRequire compliant Intune-enrolled device\nBlock risky sign-ins via Identity Protection integration\n\nAlways test with the What-If tool before setting to Enforce!",
+      "body": "Block legacy auth Ã¢ÂÂ eliminates basic auth protocols\nRequire MFA for all admin accounts\nRequire compliant Intune-enrolled device\nBlock risky sign-ins via Identity Protection integration\n\nAlways test with the What-If tool before setting to Enforce!",
       "date": "2026-04-15"
     }
   ],
@@ -192,5 +192,122 @@
     false
   ],
   "uid": 300,
-  "lastSync": "2026-04-17T14:24:03.996Z"
+  "lastSync": "2026-04-17T14:32:54.210Z",
+  "certMeta": {
+    "az104": {
+      "label": "AZ-104",
+      "col": "#0969da",
+      "target": 80,
+      "topics": [
+        "Manage Azure identities and governance",
+        "Implement and manage storage",
+        "Deploy and manage Azure compute resources",
+        "Configure and manage virtual networking",
+        "Monitor and back up Azure resources"
+      ]
+    },
+    "az500": {
+      "label": "AZ-500",
+      "col": "#6e40c9",
+      "target": 100,
+      "topics": [
+        "Manage identity and access",
+        "Secure networking",
+        "Secure compute, storage and databases",
+        "Manage security operations"
+      ]
+    },
+    "sc200": {
+      "label": "SC-200",
+      "col": "#1a7f37",
+      "target": 90,
+      "topics": [
+        "Mitigate threats using Microsoft Defender XDR",
+        "Mitigate threats using Defender for Cloud",
+        "Mitigate threats using Microsoft Sentinel",
+        "Configure Microsoft Sentinel environment",
+        "Connect data sources to Sentinel"
+      ]
+    }
+  },
+  "milData": [
+    {
+      "title": "Baseline set",
+      "month": "Now",
+      "desc": "Tracker live. Study schedule confirmed.",
+      "col": "#0969da"
+    },
+    {
+      "title": "AZ-104 study begins",
+      "month": "Month 1",
+      "desc": "MS Learn path started. 2h daily minimum.",
+      "col": "#0969da"
+    },
+    {
+      "title": "AZ-104 passed",
+      "month": "Month 3",
+      "desc": "First cert achieved. Begin AZ-500 immediately.",
+      "col": "#6e40c9"
+    },
+    {
+      "title": "Azure lab environment built",
+      "month": "Month 4",
+      "desc": "Personal Azure tenant. Hands-on practice documented.",
+      "col": "#6e40c9"
+    },
+    {
+      "title": "Mid-year performance review",
+      "month": "Month 6",
+      "desc": "Make promotion case visible to management.",
+      "col": "#9a6700"
+    },
+    {
+      "title": "AZ-500 passed",
+      "month": "Month 7",
+      "desc": "Security engineering credential secured.",
+      "col": "#6e40c9"
+    },
+    {
+      "title": "Lead a security initiative",
+      "month": "Month 9",
+      "desc": "Volunteer to lead a cloud security project.",
+      "col": "#1a7f37"
+    },
+    {
+      "title": "SC-200 passed",
+      "month": "Month 11",
+      "desc": "Full Microsoft security stack certified.",
+      "col": "#1a7f37"
+    },
+    {
+      "title": "Annual review",
+      "month": "Month 12",
+      "desc": "Present certs, projects, leadership evidence.",
+      "col": "#9a6700"
+    },
+    {
+      "title": "Promotion conversation",
+      "month": "Month 14",
+      "desc": "Formal discussion. Evidence portfolio ready.",
+      "col": "#116329"
+    },
+    {
+      "title": "Manager promotion",
+      "month": "Month 18",
+      "desc": "Target achieved. Lead security engineering team.",
+      "col": "#116329"
+    }
+  ],
+  "visActs": [
+    "Present findings at team meeting",
+    "Write internal blog post on Azure security",
+    "Mentor a junior consultant",
+    "Volunteer for cross-functional project",
+    "Attend Azure or security community event",
+    "Get 360 peer feedback",
+    "Shadow current manager for a week",
+    "Build internal automation or security tool",
+    "Submit a conference talk proposal",
+    "Publish LinkedIn article on cloud security"
+  ]
 }
