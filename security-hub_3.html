@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Security Career Command Centre</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f8f9fa;--bg2:#fff;--bg3:#f6f8fa;--bg4:#eaeef2;
+  --txt:#1a1a1a;--txt2:#57606a;--txt3:#6e7681;--txt4:#8c959f;
+  --brd:#d0d7de;--brd2:#e2e4e8;--brd3:#f0f0f0;
+  --acc:#0969da;--acc2:#0860c9;
+  --grn:#1a7f37;--grn2:#166d30;--grn-bg:#dcffe4;--grn-brd:#a8d5b5;--grn-txt:#116329;
+  --red:#cf222e;--red-bg:#ffebe9;--red-brd:#ffb8b0;
+  --ylw-bg:#fff8e1;--ylw-txt:#9a6700;--ylw-brd:#f0c040;
+}
+body.dark{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--bg4:#30363d;
+  --txt:#e6edf3;--txt2:#8b949e;--txt3:#6e7681;--txt4:#484f58;
+  --brd:#30363d;--brd2:#21262d;--brd3:#21262d;
+  --acc:#58a6ff;--acc2:#79b8ff;
+  --grn:#3fb950;--grn2:#56d364;--grn-bg:#0f2a1a;--grn-brd:#1a4a2a;--grn-txt:#3fb950;
+  --red:#f85149;--red-bg:#2a1010;--red-brd:#4a1818;
+  --ylw-bg:#2a2000;--ylw-txt:#d29922;--ylw-brd:#5a4000;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);font-size:14px;line-height:1.5;transition:background .2s,color .2s}
+.app{max-width:960px;margin:0 auto;padding:1.2rem 1rem}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px;padding-bottom:1rem;border-bottom:1px solid var(--brd)}
+.apptitle{font-size:16px;font-weight:600;color:var(--txt)}
+.appsub{font-size:11px;color:var(--txt3);margin-top:2px}
+.sync-status{font-size:11px;padding:3px 10px;border-radius:99px;background:var(--grn-bg);color:var(--grn-txt);border:1px solid var(--grn-brd);display:flex;align-items:center;gap:5px}
+.sync-status.syncing{background:var(--ylw-bg);color:var(--ylw-txt);border-color:var(--ylw-brd)}
+.sync-status.error{background:var(--red-bg);color:var(--red);border-color:var(--red-brd)}
+.sync-status.offline{background:var(--bg3);color:var(--txt3);border-color:var(--brd)}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+.topbtns{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:1.4rem}
+.nb{padding:6px 13px;border-radius:6px;border:1px solid var(--brd);background:var(--bg2);cursor:pointer;font-size:12px;color:var(--txt3);font-family:inherit;transition:all .15s}
+.nb.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.nb:hover:not(.on){background:var(--bg3);color:var(--txt)}
+.nb.hidden-tab{display:none}
+.pg{display:none}.pg.on{display:block}
+.card{background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:1rem 1.15rem;margin-bottom:1rem}
+.ct{font-size:13px;font-weight:600;color:var(--txt);margin-bottom:0.85rem}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:1.2rem}
+.mc{background:var(--bg3);border-radius:8px;padding:0.75rem 0.9rem;border:1px solid var(--brd2)}
+.ml{font-size:11px;color:var(--txt3);margin-bottom:2px}
+.mv{font-size:20px;font-weight:600;color:var(--txt)}
+.ms{font-size:10px;color:var(--txt3);margin-top:1px}
+.bx{display:inline-block;font-size:11px;padding:2px 7px;border-radius:5px;font-weight:500;margin-right:2px}
+.bb{background:#ddf4ff;color:#0550ae}.bp{background:#fbefff;color:#6e40c9}
+.bt{background:#dcffe4;color:#116329}.ba{background:#fff8c5;color:#7d4e00}
+.br{background:#ffebe9;color:#cf222e}.bg{background:var(--bg3);color:var(--txt2)}
+.bn{background:#dcffe4;color:#116329}
+body.dark .bb{background:#0c2d6b;color:#79b8ff}body.dark .bp{background:#2a1a4a;color:#c084fc}
+body.dark .bt{background:#0f2a1a;color:#3fb950}body.dark .ba{background:#2a2000;color:#d29922}
+body.dark .br{background:#2a1010;color:#f85149}body.dark .bn{background:#0f2a1a;color:#3fb950}
+.row{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--brd3)}
+.row:last-child{border-bottom:none}
+.ck{width:16px;height:16px;min-width:16px;border-radius:4px;border:1.5px solid var(--brd);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;margin-top:2px;flex-shrink:0;background:var(--bg2)}
+.ck.on{background:var(--grn);border-color:var(--grn);color:#fff}
+.rt{font-size:13px;color:var(--txt);flex:1;line-height:1.5}
+.rt.dn{color:var(--txt4);text-decoration:line-through}
+.pbb{flex:1;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.pb{height:100%;border-radius:3px}
+.pct{font-size:11px;color:var(--txt3);min-width:30px;text-align:right}
+.ir{display:flex;gap:7px;margin-bottom:7px;flex-wrap:wrap}
+.ir input,.ir select{font-size:13px;padding:7px 9px;flex:1;min-width:130px;border:1px solid var(--brd);border-radius:6px;background:var(--bg2);color:var(--txt);font-family:inherit}
+.ir input:focus,.ir select:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px rgba(9,105,218,.1)}
+.ir textarea{font-size:13px;padding:7px 9px;flex:1;min-width:200px;resize:vertical;border:1px solid var(--brd);border-radius:6px;background:var(--bg2);color:var(--txt);font-family:inherit}
+.ir textarea:focus{outline:none;border-color:var(--acc)}
+.btn{padding:6px 13px;border-radius:6px;border:1px solid var(--brd);background:var(--bg2);cursor:pointer;font-size:12px;color:var(--txt);font-family:inherit;transition:all .15s}
+.btn:hover{background:var(--bg3)}
+.btnp{background:var(--acc);color:#fff;border-color:var(--acc)}
+.btnp:hover{background:var(--acc2)}
+.btng{background:var(--grn);color:#fff;border-color:var(--grn)}
+.btng:hover{background:var(--grn2)}
+.btns{padding:3px 9px;font-size:11px}
+.btnd{color:var(--red);border-color:var(--red-brd)}.btnd:hover{background:var(--red-bg)}
+.nc{border:1px solid var(--brd);border-radius:10px;padding:0.85rem 1rem;margin-bottom:0.7rem;background:var(--bg2);transition:border-color .15s}
+.nc:hover{border-color:var(--acc)}
+.ntl{font-size:13px;font-weight:600;color:var(--txt);cursor:pointer;margin-bottom:3px}
+.ntl:hover{color:var(--acc)}
+.nm{font-size:11px;color:var(--txt3);margin-bottom:4px}
+.np{font-size:12px;color:var(--txt2);line-height:1.6;white-space:pre-wrap}
+.xp{display:none;margin-top:0.7rem;padding-top:0.7rem;border-top:1px solid var(--brd3)}
+.cb{background:var(--bg3);border:1px solid var(--brd);border-radius:6px;padding:0.75rem 0.9rem;font-family:'SFMono-Regular',Consolas,monospace;font-size:11px;color:var(--txt);white-space:pre-wrap;word-break:break-all;line-height:1.6;position:relative;margin-top:0.4rem}
+.cpb{position:absolute;top:5px;right:6px;padding:2px 7px;font-size:10px;border-radius:5px;border:1px solid var(--brd);background:var(--bg2);cursor:pointer;color:var(--txt3);font-family:inherit}
+.cpb:hover{background:var(--bg3)}
+.sw{position:relative;margin-bottom:0.8rem}
+.sw input{width:100%;padding:7px 10px 7px 30px;font-size:13px;border:1px solid var(--brd);border-radius:6px;background:var(--bg2);color:var(--txt);font-family:inherit}
+.sw input:focus{outline:none;border-color:var(--acc)}
+.si{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--txt3)}
+.fr{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:0.8rem}
+.fb{padding:3px 10px;border-radius:99px;border:1px solid var(--brd);background:var(--bg2);cursor:pointer;font-size:11px;color:var(--txt3);font-family:inherit}
+.fb.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.fb:hover:not(.on){background:var(--bg3)}
+.tli{display:flex;gap:10px;margin-bottom:0.85rem}
+.tldot{width:12px;height:12px;border-radius:50%;margin-top:3px;flex-shrink:0;cursor:pointer;transition:opacity .2s}
+.tlw{display:flex;flex-direction:column;align-items:center;min-width:12px}
+.tlv{flex:1;width:1.5px;background:var(--brd);margin-top:3px}
+.tlb{flex:1;padding-bottom:0.2rem}
+.tlt{font-size:13px;font-weight:600;color:var(--txt)}
+.tld2{font-size:12px;color:var(--txt2);margin-top:3px;line-height:1.5}
+.hd{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--brd);cursor:pointer;flex-shrink:0;background:var(--bg2);transition:all .15s}
+.hd.on{background:var(--acc);border-color:var(--acc)}
+.ring{width:72px;height:72px;border-radius:50%;border:3px solid var(--grn);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:var(--txt);flex-shrink:0}
+.ntf{display:none;padding:8px 14px;border-radius:6px;font-size:12px;margin-bottom:1rem}
+.ntf.ok{background:var(--grn-bg);border:1px solid var(--grn-brd);color:var(--grn-txt)}
+.ntf.err{background:var(--red-bg);border:1px solid var(--red-brd);color:var(--red)}
+.eb{background:var(--bg3);border-radius:8px;padding:0.85rem 1rem;margin-bottom:0.7rem;border:1px solid var(--brd2)}
+.et{font-size:13px;font-weight:600;color:var(--txt);margin-bottom:3px}
+.ed{font-size:12px;color:var(--txt2);margin-bottom:0.55rem;line-height:1.5}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;align-items:center;justify-content:center}
+.modal-bg.show{display:flex}
+.modal{background:var(--bg2);border-radius:12px;padding:1.5rem;width:min(520px,92vw);border:1px solid var(--brd);max-height:90vh;overflow-y:auto}
+.modal h3{font-size:15px;font-weight:600;margin-bottom:0.5rem;color:var(--txt)}
+.modal p{font-size:12px;color:var(--txt2);margin-bottom:1rem;line-height:1.6}
+.modal input{width:100%;padding:8px 10px;font-size:13px;border:1px solid var(--brd);border-radius:6px;margin-bottom:0.8rem;font-family:inherit;background:var(--bg2);color:var(--txt)}
+.modal input:focus{outline:none;border-color:var(--acc)}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end}
+.prog-bar-wrap{background:var(--bg4);border-radius:4px;height:8px;overflow:hidden;margin:0.5rem 0}
+.prog-bar-fill{height:100%;background:var(--acc);border-radius:4px;transition:width .3s}
+a{color:var(--acc);text-decoration:none}
+/* dark mode toggle */
+.dm-toggle{width:40px;height:22px;border-radius:99px;background:var(--brd);border:none;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
+.dm-toggle::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s}
+body.dark .dm-toggle{background:var(--acc)}
+body.dark .dm-toggle::after{transform:translateX(18px)}
+/* tab customise */
+.tab-edit-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--brd3)}
+.tab-edit-row:last-child{border-bottom:none}
+.tab-edit-row input{flex:1;font-size:13px;padding:5px 8px;border:1px solid var(--brd);border-radius:5px;background:var(--bg2);color:var(--txt);font-family:inherit}
+.tab-edit-row input:focus{outline:none;border-color:var(--acc)}
+.tog{width:34px;height:18px;border-radius:99px;background:var(--brd);border:none;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
+.tog::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .2s}
+.tog.on{background:var(--grn)}
+.tog.on::after{transform:translateX(16px)}
+@media(max-width:600px){.apptitle{font-size:14px}.topbtns{gap:4px}}
+</style>
+</head>
+<body>
+<div class="app">
+<div id="ntf" class="ntf"></div>
+
+<!-- GitHub token modal -->
+<div class="modal-bg" id="token-modal">
+  <div class="modal">
+    <h3>Connect to GitHub</h3>
+    <p>Enter your GitHub Personal Access Token to enable automatic sync. Your token is stored only in this browser and never sent anywhere except GitHub's API.<br><br>
+    To generate one: GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token → tick <strong>repo</strong> scope.</p>
+    <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"/>
+    <div style="font-size:11px;color:var(--txt3);margin-bottom:0.8rem">Repository: <strong>tjbusari-cyber/productivity--tracker</strong></div>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeTokenModal()">Cancel</button>
+      <button class="btn btnp" onclick="saveToken()">Connect</button>
+    </div>
+  </div>
+</div>
+
+<!-- Customise tabs modal -->
+<div class="modal-bg" id="tabs-modal">
+  <div class="modal">
+    <h3>Customise tabs</h3>
+    <p>Rename tabs to suit your workflow, or hide ones you don't use. Toggle the switch to show or hide each tab. The Dashboard tab is always visible.</p>
+    <div id="tab-edit-list"></div>
+    <div class="modal-btns" style="margin-top:1rem">
+      <button class="btn" onclick="closeTabsModal()">Cancel</button>
+      <button class="btn btnp" onclick="saveTabSettings()">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<div class="topbar">
+  <div>
+    <div class="apptitle" id="app-title-el">Security Career Command Centre</div>
+    <div class="appsub">AZ-104 · AZ-500 · SC-200 · Manager track · Knowledge base</div>
+  </div>
+  <div class="topbtns">
+    <div class="sync-status offline" id="sync-status"><span class="sync-dot"></span><span id="sync-label">Not connected</span></div>
+    <button class="dm-toggle" id="dm-btn" onclick="toggleDark()" title="Toggle dark mode"></button>
+    <button class="btn btns" onclick="showTabsModal()">Customise</button>
+    <button class="btn btns" onclick="showTokenModal()">GitHub sync</button>
+    <button class="btn btns btng" onclick="manualSync()">&#8593; Sync now</button>
+    <button class="btn btns" onclick="doExportAll()">Backup</button>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nb on" onclick="go('dash')">Dashboard</button>
+  <button class="nb" onclick="go('certs')">Certifications</button>
+  <button class="nb" onclick="go('tasks')">Tasks</button>
+  <button class="nb" onclick="go('habits')">Habits</button>
+  <button class="nb" onclick="go('notes')">Notes</button>
+  <button class="nb" onclick="go('scripts')">Scripts</button>
+  <button class="nb" onclick="go('tuts')">Tutorials</button>
+  <button class="nb" onclick="go('career')">Career track</button>
+  <button class="nb" onclick="go('exp')">Export</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dash" class="pg on">
+  <div class="mg" id="dm"></div>
+  <div class="grid2">
+    <div class="card"><div class="ct">Certification progress</div><div id="dcp"></div><div style="margin-top:0.6rem"><button class="btn btns" onclick="go('certs')">Manage certs</button></div></div>
+    <div class="card"><div class="ct">Today's tasks</div><div id="dtasks"></div><div style="margin-top:0.6rem"><button class="btn btns" onclick="go('tasks')">All tasks</button></div></div>
+  </div>
+  <div class="card"><div class="ct">18-month roadmap</div><div id="drm"></div></div>
+  <div class="grid2">
+    <div class="card"><div class="ct">Habits — this week</div><div id="dhab"></div></div>
+    <div class="card">
+      <div class="ct">Promotion readiness</div>
+      <div style="display:flex;gap:1rem;align-items:center;margin-top:0.3rem">
+        <div class="ring" id="dring">0%</div>
+        <div id="drd" style="font-size:12px;color:#57606a;line-height:2"></div>
+      </div>
+      <div style="margin-top:0.8rem;display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn btns" onclick="go('career')">Career track</button>
+      </div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card"><div class="ct">Recent notes</div><div id="dnt"></div><div style="margin-top:0.5rem"><button class="btn btns" onclick="go('notes')">All notes</button></div></div>
+    <div class="card"><div class="ct">Recent scripts</div><div id="dsc"></div><div style="margin-top:0.5rem"><button class="btn btns" onclick="go('scripts')">All scripts</button></div></div>
+  </div>
+</div>
+
+<!-- CERTS -->
+<div id="certs" class="pg"><div id="certpg"></div></div>
+
+<!-- TASKS -->
+<div id="tasks" class="pg">
+  <div class="card">
+    <div class="ct">Add task</div>
+    <div class="ir">
+      <input type="text" id="ti" placeholder="Task description..."/>
+      <select id="tc"><option value="study">Study</option><option value="cert">Cert prep</option><option value="work">Work</option><option value="career">Career</option><option value="kb">Knowledge base</option><option value="admin">Admin</option></select>
+      <select id="tp"><option value="high">High priority</option><option value="med">Medium</option><option value="low">Low</option></select>
+    </div>
+    <button class="btn btnp" onclick="addTask()">Add task</button>
+  </div>
+  <div class="card"><div class="ct">Active</div><div id="tact"></div></div>
+  <div class="card"><div class="ct">Completed</div><div id="tdone"></div></div>
+</div>
+
+<!-- HABITS -->
+<div id="habits" class="pg">
+  <div class="card">
+    <div class="ct">Daily habits — this week</div>
+    <div style="display:flex;justify-content:flex-end;gap:4px;margin-bottom:6px">
+      <span style="font-size:10px;color:#6e7681;width:15px;text-align:center">M</span><span style="font-size:10px;color:#6e7681;width:15px;text-align:center">T</span><span style="font-size:10px;color:#6e7681;width:15px;text-align:center">W</span><span style="font-size:10px;color:#6e7681;width:15px;text-align:center">T</span><span style="font-size:10px;color:#6e7681;width:15px;text-align:center">F</span><span style="font-size:10px;color:#6e7681;width:15px;text-align:center">S</span><span style="font-size:10px;color:#6e7681;width:15px;text-align:center">S</span>
+    </div>
+    <div id="hlist"></div>
+  </div>
+  <div class="card"><div class="ct">Add habit</div><div class="ir"><input type="text" id="hi" placeholder="e.g. Review Azure docs 20 min"/><button class="btn btnp" onclick="addHabit()">Add</button></div></div>
+</div>
+
+<!-- NOTES -->
+<div id="notes" class="pg">
+  <div class="card">
+    <div class="ct">New note</div>
+    <div class="ir"><input type="text" id="nti" placeholder="Title..." style="flex:2"/><select id="ncat"><option value="az">Azure</option><option value="sec">Security</option><option value="net">Network</option><option value="ps">PowerShell</option><option value="misc">General</option></select></div>
+    <div class="ir"><input type="text" id="ntag" placeholder="Tags, comma separated..."/></div>
+    <div class="ir"><textarea id="nbod" placeholder="Write your note..." style="min-height:90px"></textarea></div>
+    <button class="btn btnp" onclick="addNote()">Save note</button>
+  </div>
+  <div class="sw"><span class="si">&#9906;</span><input type="text" id="nsq" placeholder="Search notes..." oninput="rNotes()"/></div>
+  <div class="fr">
+    <button class="fb on" data-f="all" onclick="setF('n',this)">All</button>
+    <button class="fb" data-f="az" onclick="setF('n',this)">Azure</button>
+    <button class="fb" data-f="sec" onclick="setF('n',this)">Security</button>
+    <button class="fb" data-f="net" onclick="setF('n',this)">Network</button>
+    <button class="fb" data-f="ps" onclick="setF('n',this)">PowerShell</button>
+    <button class="fb" data-f="misc" onclick="setF('n',this)">General</button>
+  </div>
+  <div id="nlist"></div>
+</div>
+
+<!-- SCRIPTS -->
+<div id="scripts" class="pg">
+  <div class="card">
+    <div class="ct">Add script / command</div>
+    <div class="ir"><input type="text" id="sti" placeholder="Script name / purpose..." style="flex:2"/><select id="stp"><option value="ps">PowerShell</option><option value="az">Azure CLI</option><option value="cmd">CMD</option><option value="net">Network</option><option value="sec">Security tool</option></select></div>
+    <div class="ir"><input type="text" id="stag" placeholder="Tags (e.g. RBAC, Defender, Entra ID)..."/></div>
+    <div class="ir"><textarea id="sdes" placeholder="What does this do? When to use it?" style="min-height:45px"></textarea></div>
+    <div class="ir"><textarea id="scod" placeholder="Paste your script / command here..." style="min-height:90px;font-family:'SFMono-Regular',Consolas,monospace;font-size:12px"></textarea></div>
+    <button class="btn btnp" onclick="addScript()">Save script</button>
+  </div>
+  <div class="sw"><span class="si">&#9906;</span><input type="text" id="ssq" placeholder="Search scripts..." oninput="rScripts()"/></div>
+  <div class="fr">
+    <button class="fb on" data-f="all" onclick="setF('s',this)">All</button>
+    <button class="fb" data-f="ps" onclick="setF('s',this)">PowerShell</button>
+    <button class="fb" data-f="az" onclick="setF('s',this)">Azure CLI</button>
+    <button class="fb" data-f="cmd" onclick="setF('s',this)">CMD</button>
+    <button class="fb" data-f="net" onclick="setF('s',this)">Network</button>
+    <button class="fb" data-f="sec" onclick="setF('s',this)">Security</button>
+  </div>
+  <div id="slist"></div>
+</div>
+
+<!-- TUTORIALS -->
+<div id="tuts" class="pg">
+  <div class="card">
+    <div class="ct">New tutorial / how-to</div>
+    <div class="ir"><input type="text" id="tti" placeholder="Title, e.g. How to configure Microsoft Sentinel..." style="flex:2"/><select id="tcat"><option value="az">Azure</option><option value="sec">Security</option><option value="ps">PowerShell</option><option value="net">Network</option><option value="misc">General</option></select></div>
+    <div class="ir"><input type="text" id="ttag" placeholder="Tags..."/><select id="tdif"><option value="basic">Basic</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option></select></div>
+    <div class="ir"><textarea id="tbod" placeholder="Step-by-step instructions, commands, gotchas..." style="min-height:120px"></textarea></div>
+    <button class="btn btnp" onclick="addTut()">Save tutorial</button>
+  </div>
+  <div class="sw"><span class="si">&#9906;</span><input type="text" id="tsq" placeholder="Search tutorials..." oninput="rTuts()"/></div>
+  <div class="fr">
+    <button class="fb on" data-f="all" onclick="setF('t',this)">All</button>
+    <button class="fb" data-f="az" onclick="setF('t',this)">Azure</button>
+    <button class="fb" data-f="sec" onclick="setF('t',this)">Security</button>
+    <button class="fb" data-f="ps" onclick="setF('t',this)">PowerShell</button>
+    <button class="fb" data-f="basic" onclick="setF('t',this)">Basic</button>
+    <button class="fb" data-f="intermediate" onclick="setF('t',this)">Intermediate</button>
+    <button class="fb" data-f="advanced" onclick="setF('t',this)">Advanced</button>
+  </div>
+  <div id="tlist"></div>
+</div>
+
+<!-- CAREER -->
+<div id="career" class="pg">
+  <div class="card"><div class="ct">18-month milestone timeline</div><div id="ctl"></div></div>
+  <div class="grid2">
+    <div class="card"><div class="ct">Skills tracker</div><div id="csk"></div></div>
+    <div class="card"><div class="ct">Visibility actions</div><div id="cvi"></div></div>
+  </div>
+  <div class="card">
+    <div class="ct">Promotion readiness</div>
+    <div style="display:flex;gap:1rem;align-items:center;margin-bottom:1rem">
+      <div class="ring" id="cring">0%</div>
+      <div id="cprd" style="font-size:12px;color:#57606a;line-height:2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT -->
+<div id="exp" class="pg">
+  <div class="card">
+    <div class="ct">GitHub sync settings</div>
+    <div class="eb">
+      <div class="et">Sync status</div>
+      <div class="ed">Your data automatically syncs to <strong>tjbusari-cyber/productivity--tracker</strong> on GitHub. Data is saved as <code>data.json</code> in your private repo. Open this tool on any device and it loads your latest data.</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn btns btng" onclick="manualSync()">Sync now</button>
+        <button class="btn btns" onclick="showTokenModal()">Update token</button>
+        <button class="btn btns btnd" onclick="clearToken()">Disconnect</button>
+      </div>
+    </div>
+    <div id="last-sync-info" style="font-size:11px;color:#6e7681;margin-top:0.5rem"></div>
+  </div>
+  <div class="card">
+    <div class="ct">Local export options</div>
+    <div class="eb"><div class="et">Obsidian vault (.md)</div><div class="ed">All notes, scripts and tutorials as Markdown with YAML frontmatter — drop into your Obsidian vault.</div><button class="btn btns" onclick="doObsidian()">Download Obsidian export</button></div>
+    <div class="eb"><div class="et">OneNote copy-paste</div><div class="ed">Copies everything formatted to clipboard — paste directly into a OneNote notebook.</div><button class="btn btns" onclick="doOneNote()">Copy to clipboard</button></div>
+    <div class="eb"><div class="et">Script cheat sheet (.md)</div><div class="ed">All your scripts in one formatted Markdown file organised by type.</div><button class="btn btns" onclick="doCheatsheet()">Download cheat sheet</button></div>
+    <div class="eb"><div class="et">Full JSON backup</div><div class="ed">Download a complete local backup of all your data.</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn btns btnp" onclick="doExportAll()">Download JSON</button><button class="btn btns" onclick="document.getElementById('impf').click()">Import JSON</button><input type="file" id="impf" accept=".json" style="display:none" onchange="doImport(event)"/></div></div>
+  </div>
+</div>
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────
+var REPO_OWNER = 'tjbusari-cyber';
+var REPO_NAME  = 'productivity--tracker';
+var DATA_FILE  = 'data.json';
+var API_BASE   = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + DATA_FILE;
+
+// ── STATE ───────────────────────────────────────────────────────────────
+var S = {
+  tasks:   [],
+  habits:  [
+    {name:'Study session 60+ min',       days:[0,0,0,0,0,0,0]},
+    {name:'MS Learn / Azure docs review',days:[0,0,0,0,0,0,0]},
+    {name:'Azure hands-on lab',          days:[0,0,0,0,0,0,0]},
+    {name:'LinkedIn engagement',         days:[0,0,0,0,0,0,0]},
+    {name:'Review goals and progress',   days:[0,0,0,0,0,0,0]},
+  ],
+  study:   {az104:0, az500:0, sc200:0},
+  cp:      {az104:{}, az500:{}, sc200:{}},
+  notes:   [
+    {id:1,title:'Azure RBAC — key roles',cat:'az',tags:['RBAC','IAM'],body:'Owner: Full access + delegation\nContributor: Full access, no role assignment\nReader: View only\nUser Access Admin: Manage user access\n\nBest practice: Least privilege. Scope to resource group not subscription.',date:'2026-04-15'},
+    {id:2,title:'Defender for Cloud — key concepts',cat:'sec',tags:['Defender','CSPM'],body:'CSPM = Cloud Security Posture Management (free tier available)\nCWPP = Cloud Workload Protection Platform (paid)\n\nSecure Score measures your posture against security recommendations.\nMaps to compliance frameworks: CIS, NIST, PCI DSS.',date:'2026-04-15'},
+    {id:3,title:'Conditional Access — policy patterns',cat:'az',tags:['AAD','MFA','Zero Trust'],body:'Block legacy auth — eliminates basic auth protocols\nRequire MFA for all admin accounts\nRequire compliant Intune-enrolled device\nBlock risky sign-ins via Identity Protection integration\n\nAlways test with the What-If tool before setting to Enforce!',date:'2026-04-15'},
+  ],
+  scripts: [
+    {id:10,title:'Get Azure AD users with MFA status',type:'ps',tags:['MFA','Entra ID','Audit'],desc:'Export all users and MFA registration status to CSV for compliance audit.',code:'Connect-MgGraph -Scopes "UserAuthenticationMethod.Read.All"\n$users = Get-MgUser -All\n$results = foreach($u in $users){\n  $methods = Get-MgUserAuthenticationMethod -UserId $u.Id\n  [PSCustomObject]@{\n    UPN = $u.UserPrincipalName\n    MFA = ($methods.Count -gt 1)\n  }\n}\n$results | Export-Csv -Path .\\mfa_report.csv -NoTypeInformation',date:'2026-04-15'},
+    {id:11,title:'List all Azure role assignments',type:'az',tags:['RBAC','Audit'],desc:'List every role assignment at subscription scope with principal name and role.',code:'az role assignment list --all \\\n  --query "[].{Name:principalName,Role:roleDefinitionName,Scope:scope}" \\\n  --output table',date:'2026-04-15'},
+    {id:12,title:'Find open inbound NSG rules',type:'ps',tags:['NSG','Network','Firewall'],desc:'List all NSG rules that allow inbound traffic from Any source address.',code:'$nsgs = Get-AzNetworkSecurityGroup\nforeach($nsg in $nsgs){\n  $nsg.SecurityRules | Where-Object {\n    $_.Access -eq "Allow" -and\n    $_.Direction -eq "Inbound" -and\n    $_.SourceAddressPrefix -eq "*"\n  } | Select-Object Name, DestinationPortRange\n}',date:'2026-04-15'},
+  ],
+  tuts: [
+    {id:20,title:'Enable Microsoft Sentinel and connect data sources',cat:'az',tags:['Sentinel','SIEM','Log Analytics'],difficulty:'intermediate',body:'1. Create a Log Analytics workspace in your preferred region\n2. Navigate to Microsoft Sentinel in the Azure portal and click Add\n3. Select your Log Analytics workspace and click Add Microsoft Sentinel\n4. Go to Data connectors in the left menu\n5. Enable key connectors: Azure Active Directory, Microsoft Defender for Cloud, Office 365, Azure Activity\n6. For each connector follow the Prerequisites tab before enabling\n7. Verify data is flowing: Logs > query SigninLogs or AuditLogs\n\nGotcha: Data can take 20-30 minutes to appear after first connection.\nCost tip: Set a daily ingestion cap in your workspace settings to avoid unexpected bills.',date:'2026-04-15'},
+  ],
+  skills: {
+    'Azure fundamentals':60,'Network security':70,'Identity and access':50,
+    'SIEM and Sentinel':40,'Cloud governance':45,'Leadership presence':55,
+    'Stakeholder management':60,'Technical writing':65
+  },
+  vis: {},
+  mil: [false,false,false,false,false,false,false,false,false,false,false],
+  fi:  {n:'all', s:'all', t:'all'},
+  uid: 300,
+  lastSync: null,
+  fileSHA: null
+};
+
+// ── GITHUB SYNC ─────────────────────────────────────────────────────────
+function getToken(){ return localStorage.getItem('gh_token_cc'); }
+function setToken(t){ localStorage.setItem('gh_token_cc', t); }
+function clearToken(){ localStorage.removeItem('gh_token_cc'); setSyncStatus('offline','Not connected'); ntf('GitHub disconnected','ok'); }
+
+function setSyncStatus(state, label){
+  var el = document.getElementById('sync-status');
+  var lb = document.getElementById('sync-label');
+  el.className = 'sync-status ' + state;
+  lb.textContent = label;
+}
+
+function showTokenModal(){ document.getElementById('token-modal').classList.add('show'); }
+function closeTokenModal(){ document.getElementById('token-modal').classList.remove('show'); }
+function saveToken(){
+  var t = document.getElementById('token-input').value.trim();
+  if(!t){ ntf('Please enter a token','err'); return; }
+  setToken(t);
+  document.getElementById('token-input').value = '';
+  closeTokenModal();
+  ntf('Token saved — loading your data from GitHub...','ok');
+  loadFromGitHub();
+}
+
+function loadFromGitHub(){
+  var token = getToken();
+  if(!token){ setSyncStatus('offline','Not connected'); return; }
+  setSyncStatus('syncing','Loading...');
+  fetch(API_BASE, {
+    headers: {
+      'Authorization': 'token ' + token,
+      'Accept': 'application/vnd.github.v3+json'
+    }
+  })
+  .then(function(r){
+    if(r.status === 404){ 
+      setSyncStatus('ok','Connected — no data yet');
+      ntf('Connected! No existing data found — starting fresh.','ok');
+      return null;
+    }
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
+  .then(function(data){
+    if(!data) return;
+    S.fileSHA = data.sha;
+    var content = JSON.parse(atob(data.content.replace(/\n/g,'')));
+    // merge loaded data into S
+    ['tasks','habits','study','cp','notes','scripts','tuts','skills','vis','mil','uid','lastSync'].forEach(function(k){
+      if(content[k] !== undefined) S[k] = content[k];
+    });
+    if(content.certMeta) { Object.keys(content.certMeta).forEach(function(k){ certMeta[k]=content.certMeta[k]; }); }
+    if(content.milData) { milData.length=0; content.milData.forEach(function(m){milData.push(m);}); }
+    if(content.visActs) { visActs.length=0; content.visActs.forEach(function(v){visActs.push(v);}); }
+    S.fileSHA = data.sha;
+    var dt = S.lastSync ? new Date(S.lastSync).toLocaleString() : 'unknown';
+    setSyncStatus('ok','Synced');
+    document.getElementById('last-sync-info').textContent = 'Last saved: ' + dt;
+    ntf('Data loaded from GitHub successfully','ok');
+    rDash(); rTasks(); rHabits();
+  })
+  .catch(function(err){
+    setSyncStatus('error','Sync error');
+    ntf('Could not load from GitHub: ' + err.message + '. Check your token has repo scope.','err');
+  });
+}
+
+function saveToGitHub(quiet){
+  var token = getToken();
+  if(!token){ if(!quiet) ntf('Not connected to GitHub — click "GitHub sync" to connect','err'); return; }
+  setSyncStatus('syncing','Saving...');
+  S.lastSync = new Date().toISOString();
+  var payload = {};
+  ['tasks','habits','study','cp','notes','scripts','tuts','skills','vis','mil','uid','lastSync'].forEach(function(k){ payload[k] = S[k]; });
+  payload.certMeta = certMeta;
+  payload.milData = milData;
+  payload.visActs = visActs;
+  var body = {
+    message: 'Update data ' + new Date().toISOString().split('T')[0],
+    content: btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))))
+  };
+  if(S.fileSHA) body.sha = S.fileSHA;
+  fetch(API_BASE, {
+    method: 'PUT',
+    headers: {
+      'Authorization': 'token ' + token,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  })
+  .then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+  .then(function(data){
+    S.fileSHA = data.content.sha;
+    setSyncStatus('ok','Synced');
+    var dt = new Date(S.lastSync).toLocaleString();
+    document.getElementById('last-sync-info').textContent = 'Last saved: ' + dt;
+    if(!quiet) ntf('Saved to GitHub successfully','ok');
+  })
+  .catch(function(err){
+    setSyncStatus('error','Save failed');
+    ntf('GitHub save failed: ' + err.message,'err');
+  });
+}
+
+function manualSync(){ saveToGitHub(false); }
+
+// Auto-save 3s after last change
+var saveTimer = null;
+function queueSave(){
+  if(saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){ saveToGitHub(true); }, 3000);
+}
+
+// ── LOCAL STORAGE FALLBACK ───────────────────────────────────────────────
+function svLocal(){
+  try{ localStorage.setItem('cc3_data', JSON.stringify({tasks:S.tasks,habits:S.habits,study:S.study,cp:S.cp,notes:S.notes,scripts:S.scripts,tuts:S.tuts,skills:S.skills,vis:S.vis,mil:S.mil,uid:S.uid,certMeta:certMeta,milData:milData,visActs:visActs})); }catch(e){}
+}
+function sv(){ svLocal(); queueSave(); }
+
+// ── NOTIFY ───────────────────────────────────────────────────────────────
+function ntf(m, type){
+  var n = document.getElementById('ntf');
+  n.textContent = m;
+  n.className = 'ntf ' + (type||'ok');
+  n.style.display = 'block';
+  setTimeout(function(){ n.style.display='none'; }, 3000);
+}
+
+// ── DATA MAPS ────────────────────────────────────────────────────────────
+var certMeta = {
+  az104:{label:'AZ-104',col:'#0969da',target:80,topics:['Manage Azure identities and governance','Implement and manage storage','Deploy and manage Azure compute resources','Configure and manage virtual networking','Monitor and back up Azure resources']},
+  az500:{label:'AZ-500',col:'#6e40c9',target:100,topics:['Manage identity and access','Secure networking','Secure compute, storage and databases','Manage security operations']},
+  sc200:{label:'SC-200',col:'#1a7f37',target:90,topics:['Mitigate threats using Microsoft Defender XDR','Mitigate threats using Defender for Cloud','Mitigate threats using Microsoft Sentinel','Configure Microsoft Sentinel environment','Connect data sources to Sentinel']}
+};
+var milData = [
+  {title:'Baseline set',month:'Now',desc:'Tracker live. Study schedule confirmed.',col:'#0969da'},
+  {title:'AZ-104 study begins',month:'Month 1',desc:'MS Learn path started. 2h daily minimum.',col:'#0969da'},
+  {title:'AZ-104 passed',month:'Month 3',desc:'First cert achieved. Begin AZ-500 immediately.',col:'#6e40c9'},
+  {title:'Azure lab environment built',month:'Month 4',desc:'Personal Azure tenant. Hands-on practice documented.',col:'#6e40c9'},
+  {title:'Mid-year performance review',month:'Month 6',desc:'Make promotion case visible to management.',col:'#9a6700'},
+  {title:'AZ-500 passed',month:'Month 7',desc:'Security engineering credential secured.',col:'#6e40c9'},
+  {title:'Lead a security initiative',month:'Month 9',desc:'Volunteer to lead a cloud security project.',col:'#1a7f37'},
+  {title:'SC-200 passed',month:'Month 11',desc:'Full Microsoft security stack certified.',col:'#1a7f37'},
+  {title:'Annual review',month:'Month 12',desc:'Present certs, projects, leadership evidence.',col:'#9a6700'},
+  {title:'Promotion conversation',month:'Month 14',desc:'Formal discussion. Evidence portfolio ready.',col:'#116329'},
+  {title:'Manager promotion',month:'Month 18',desc:'Target achieved. Lead security engineering team.',col:'#116329'}
+];
+var visActs = ['Present findings at team meeting','Write internal blog post on Azure security','Mentor a junior consultant','Volunteer for cross-functional project','Attend Azure or security community event','Get 360 peer feedback','Shadow current manager for a week','Build internal automation or security tool','Submit a conference talk proposal','Publish LinkedIn article on cloud security'];
+var CL = {az:'Azure',sec:'Security',net:'Network',ps:'PowerShell',cmd:'CMD',misc:'General'};
+var CB = {az:'bb',sec:'br',net:'bt',ps:'bp',cmd:'ba',misc:'bg'};
+var TB = {ps:'bp',az:'bb',cmd:'ba',net:'bt',sec:'br'};
+var TL = {ps:'PowerShell',az:'Azure CLI',cmd:'CMD',net:'Network',sec:'Security tool'};
+var DB = {basic:'bt',intermediate:'bb',advanced:'br'};
+
+// ── NAV ──────────────────────────────────────────────────────────────────
+function go(id){
+  var ids=['dash','certs','tasks','habits','notes','scripts','tuts','career','exp'];
+  document.querySelectorAll('.nb').forEach(function(b,i){ b.classList.toggle('on', ids[i]===id); });
+  document.querySelectorAll('.pg').forEach(function(p){ p.classList.remove('on'); });
+  document.getElementById(id).classList.add('on');
+  var fn={dash:rDash,certs:rCerts,tasks:rTasks,habits:rHabits,notes:rNotes,scripts:rScripts,tuts:rTuts,career:rCareer};
+  if(fn[id]) fn[id]();
+}
+
+// ── PROMO SCORE ──────────────────────────────────────────────────────────
+function pScore(){
+  var skVals = Object.values(S.skills);
+  var avg = skVals.length ? skVals.reduce(function(a,b){return a+b;},0)/skVals.length : 0;
+  var studyTotal = Object.values(S.study).reduce(function(a,b){return a+(b||0);},0);
+  var cb = Math.min(25, studyTotal/10.8);
+  var hb = Math.min(10,S.habits.reduce(function(a,h){return a+h.days.filter(function(d){return d;}).length;},0)*0.4);
+  var mb = Math.min(10,S.mil.filter(Boolean).length);
+  var vb = Math.min(10,Object.values(S.vis).filter(Boolean).length*1.5);
+  return Math.min(100,Math.round(avg*0.55+cb+hb+mb+vb));
+}
+
+// ── DASHBOARD ────────────────────────────────────────────────────────────
+function rDash(){
+  var tot = S.study.az104+S.study.az500+S.study.sc200;
+  var dn  = S.tasks.filter(function(t){return t.done;}).length;
+  var al  = S.tasks.length;
+  var hp  = S.habits.length ? Math.round(S.habits.reduce(function(a,h){return a+h.days.filter(function(d){return d;}).length;},0)/(S.habits.length*7)*100) : 0;
+  var sc  = pScore();
+  document.getElementById('dm').innerHTML =
+    '<div class="mc"><div class="ml">Study hours</div><div class="mv">'+tot+'h</div><div class="ms">Target 270h total</div></div>'+
+    '<div class="mc"><div class="ml">Tasks done today</div><div class="mv">'+dn+'/'+al+'</div><div class="ms">Keep the streak</div></div>'+
+    '<div class="mc"><div class="ml">Habit score</div><div class="mv">'+hp+'%</div><div class="ms">This week</div></div>'+
+    '<div class="mc"><div class="ml">Promo readiness</div><div class="mv">'+sc+'%</div><div class="ms">18-month target</div></div>'+
+    '<div class="mc"><div class="ml">KB items</div><div class="mv">'+(S.notes.length+S.scripts.length+S.tuts.length)+'</div><div class="ms">'+S.notes.length+'n · '+S.scripts.length+'s · '+S.tuts.length+'t</div></div>';
+  document.getElementById('dcp').innerHTML = Object.entries(certMeta).map(function(e){
+    var k=e[0],v=e[1]; var p=Math.min(100,Math.round(S.study[k]/v.target*100));
+    return '<div class="row" style="border:none;padding:5px 0"><span style="font-size:12px;font-weight:500;min-width:65px">'+v.label+'</span><div class="pbb"><div class="pb" style="width:'+p+'%;background:'+v.col+'"></div></div><span class="pct">'+p+'%</span><span style="font-size:10px;color:#6e7681;min-width:40px;text-align:right">'+S.study[k]+'/'+v.target+'h</span></div>';
+  }).join('');
+  var at = S.tasks.filter(function(t){return !t.done;}).slice(0,5);
+  document.getElementById('dtasks').innerHTML = at.length ? at.map(function(t){
+    return '<div class="row"><div class="ck '+(t.done?'on':'')+'" onclick="tT('+t.id+')">'+(t.done?'&#10003;':'')+'</div><span class="rt '+(t.done?'dn':'')+'">'+t.text+'</span><span class="bx '+(CB[t.cat]||'bg')+'" style="font-size:10px">'+t.cat+'</span></div>';
+  }).join('') : '<span style="font-size:12px;color:#6e7681">No active tasks. Add some!</span>';
+  var now=Date.now(), st=new Date(2026,3,15).getTime(), en=new Date(2027,9,15).getTime();
+  var rp = Math.min(100,Math.round((now-st)/(en-st)*100));
+  document.getElementById('drm').innerHTML =
+    '<div style="font-size:12px;color:#57606a;margin-bottom:5px">'+rp+'% of 18-month journey elapsed</div>'+
+    '<div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:'+rp+'%"></div></div>'+
+    '<div style="display:flex;justify-content:space-between;font-size:10px;color:#6e7681;margin-top:4px"><span>Apr 26</span><span>AZ-104 Jul</span><span>AZ-500 Nov</span><span>SC-200 Mar 27</span><span>Manager Oct 27</span></div>';
+  document.getElementById('dhab').innerHTML = S.habits.slice(0,5).map(function(h){
+    var c=h.days.filter(function(d){return d;}).length;
+    return '<div class="row"><span class="rt">'+h.name+'</span><span style="font-size:11px;color:#6e7681">'+c+'/7</span></div>';
+  }).join('');
+  document.getElementById('dring').textContent = sc+'%';
+  var avg2 = Math.round(Object.values(S.skills).reduce(function(a,b){return a+b;},0)/Object.values(S.skills).length);
+  document.getElementById('drd').innerHTML = 'Skills avg: '+avg2+'%<br>Cert progress: '+Math.min(25,Math.round(tot/10.8))+'pts<br>Habits consistency: '+hp+'%';
+  document.getElementById('dnt').innerHTML = S.notes.slice(0,3).map(function(n){
+    return '<div class="row"><div><div style="font-size:12px;font-weight:500">'+n.title+'</div><div style="font-size:11px;color:#6e7681">'+n.date+' <span class="bx '+(CB[n.cat]||'bg')+'">'+CL[n.cat]+'</span></div></div></div>';
+  }).join('');
+  document.getElementById('dsc').innerHTML = S.scripts.slice(0,3).map(function(s){
+    return '<div class="row"><div><div style="font-size:12px;font-weight:500">'+s.title+'</div><div style="font-size:11px;color:#6e7681">'+s.date+' <span class="bx '+(TB[s.type]||'bg')+'">'+TL[s.type]+'</span></div></div></div>';
+  }).join('');
+  var cringEl = document.getElementById('cring'); if(cringEl) cringEl.textContent = sc+'%';
+}
+
+// ── CERTS ────────────────────────────────────────────────────────────────
+function rCerts(){
+  var keys = Object.keys(certMeta);
+  document.getElementById('certpg').innerHTML = keys.map(function(k){
+    var v=certMeta[k];
+    var p = Math.min(100,Math.round((S.study[k]||0)/v.target*100));
+    var tops = v.topics.map(function(tp,i){
+      var d = S.cp[k][i]||false;
+      return '<div class="row" style="align-items:center"><div class="ck '+(d?'on':'')+'" onclick="ctT(\''+k+'\','+i+')">'+(d?'&#10003;':'')+'</div>'+
+        '<span class="rt '+(d?'dn':'')+'" id="ctp-'+k+'-'+i+'" style="flex:1">'+tp+'</span>'+
+        '<button class="btn btns" style="margin-left:4px;font-size:10px" onclick="editCertTopic(\''+k+'\','+i+')">Edit</button>'+
+        '<button class="btn btns btnd" style="margin-left:2px" onclick="delCertTopic(\''+k+'\','+i+')">&#215;</button>'+
+      '</div>';
+    }).join('');
+    return '<div class="card">'+
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.9rem">'+
+        '<div style="flex:1">'+
+          '<input id="clbl-'+k+'" value="'+v.label+'" style="font-size:13px;font-weight:600;border:none;background:transparent;color:var(--txt);width:120px;padding:0;font-family:inherit" onchange="certMeta[\''+k+'\'].label=this.value;sv();rDash()"/>'+
+          '<div style="font-size:11px;color:var(--txt3);margin-top:2px">Target: <input id="ctgt-'+k+'" type="number" value="'+v.target+'" min="1" style="width:45px;font-size:11px;border:1px solid var(--brd);border-radius:4px;padding:1px 4px;background:var(--bg2);color:var(--txt)" onchange="certMeta[\''+k+'\'].target=parseInt(this.value)||1;sv();rCerts();rDash()"/>h recommended</div>'+
+        '</div>'+
+        '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">'+
+          '<div class="pbb" style="width:80px"><div class="pb" style="width:'+p+'%;background:'+v.col+'"></div></div>'+
+          '<span class="pct">'+p+'%</span>'+
+          '<span style="font-size:12px;color:var(--txt2)">'+(S.study[k]||0)+'h</span>'+
+          '<button class="btn btns btnd" onclick="lStudyDn(\''+k+'\')" title="Remove 1 hour">&#8722;1h</button>'+
+          '<button class="btn btns btnp" onclick="lStudy(\''+k+'\')" title="Add 1 hour">+1h</button>'+
+          '<button class="btn btns btnd" style="margin-left:4px" onclick="delCert(\''+k+'\')">Remove cert</button>'+
+        '</div>'+
+      '</div>'+
+      tops+
+      '<div style="margin-top:0.8rem;display:flex;gap:6px"><input id="newtopic-'+k+'" placeholder="Add topic..." style="flex:1;font-size:12px;padding:5px 8px;border:1px solid var(--brd);border-radius:5px;background:var(--bg2);color:var(--txt)"/><button class="btn btns btnp" onclick="addCertTopic(\''+k+'\')">+ Topic</button></div>'+
+    '</div>';
+  }).join('')+
+  '<div class="card" style="border:2px dashed var(--brd2)">'+
+    '<div class="ct">Add new certification</div>'+
+    '<div class="ir"><input type="text" id="new-cert-label" placeholder="Cert name e.g. SC-300"/><input type="number" id="new-cert-target" placeholder="Target hours e.g. 80" min="1"/></div>'+
+    '<input type="text" id="new-cert-key" placeholder="Short key e.g. sc300 (no spaces)" style="width:100%;font-size:13px;padding:7px 9px;border:1px solid var(--brd);border-radius:6px;background:var(--bg2);color:var(--txt);margin-bottom:7px"/>'+
+    '<button class="btn btnp" onclick="addCert()">Add certification</button>'+
+  '</div>';
+}
+function ctT(c,i){ S.cp[c][i]=!S.cp[c][i]; sv(); rCerts(); rDash(); }
+function lStudy(c){ S.study[c]=(S.study[c]||0)+1; sv(); ntf('+1h logged for '+certMeta[c].label,'ok'); rCerts(); rDash(); }
+function lStudyDn(c){ S.study[c]=Math.max(0,(S.study[c]||0)-1); sv(); ntf('-1h removed for '+certMeta[c].label,'ok'); rCerts(); rDash(); }
+function addCertTopic(k){
+  var inp=document.getElementById('newtopic-'+k); var val=inp.value.trim(); if(!val)return;
+  certMeta[k].topics.push(val); inp.value=''; sv(); rCerts();
+}
+function editCertTopic(k,i){
+  var cur=certMeta[k].topics[i]; var nv=prompt('Edit topic:',cur); if(nv===null)return;
+  certMeta[k].topics[i]=nv.trim()||cur; sv(); rCerts();
+}
+function delCertTopic(k,i){
+  if(!confirm('Remove this topic?'))return;
+  certMeta[k].topics.splice(i,1); delete S.cp[k][i]; sv(); rCerts();
+}
+function addCert(){
+  var lbl=document.getElementById('new-cert-label').value.trim();
+  var tgt=parseInt(document.getElementById('new-cert-target').value)||80;
+  var key=document.getElementById('new-cert-key').value.trim().replace(/\s/g,'').toLowerCase();
+  if(!lbl||!key){ntf('Enter a cert name and key','err');return;}
+  if(certMeta[key]){ntf('Key already exists','err');return;}
+  certMeta[key]={label:lbl,col:'#0969da',target:tgt,topics:[]};
+  S.study[key]=0; S.cp[key]={};
+  document.getElementById('new-cert-label').value='';
+  document.getElementById('new-cert-target').value='';
+  document.getElementById('new-cert-key').value='';
+  sv(); rCerts(); ntf('Certification added','ok');
+}
+function delCert(k){
+  if(!confirm('Remove '+certMeta[k].label+'? This will delete all study hours and topic progress for this cert.'))return;
+  delete certMeta[k]; delete S.study[k]; delete S.cp[k]; sv(); rCerts(); rDash(); ntf('Certification removed','ok');
+}
+
+// ── TASKS ────────────────────────────────────────────────────────────────
+function addTask(){
+  var t = document.getElementById('ti').value.trim(); if(!t) return;
+  S.tasks.unshift({id:S.uid++,text:t,cat:document.getElementById('tc').value,pri:document.getElementById('tp').value,done:false,date:new Date().toDateString()});
+  document.getElementById('ti').value=''; sv(); rTasks(); rDash();
+}
+function tT(id){ var t=S.tasks.find(function(x){return x.id===id;}); if(t){t.done=!t.done; sv(); rTasks(); rDash();} }
+function tDl(id){ S.tasks=S.tasks.filter(function(x){return x.id!==id;}); sv(); rTasks(); rDash(); }
+function tEdit(id){
+  var t=S.tasks.find(function(x){return x.id===id;}); if(!t)return;
+  var nv=prompt('Edit task:',t.text); if(nv===null)return;
+  t.text=nv.trim()||t.text; sv(); rTasks();
+}
+function rTasks(){
+  var pr={high:'br',med:'ba',low:'bt'};
+  function mk(items){ return items.length ? items.map(function(t){
+    return '<div class="row"><div class="ck '+(t.done?'on':'')+'" onclick="tT('+t.id+')">'+(t.done?'&#10003;':'')+'</div>'+
+      '<div style="flex:1"><span class="rt '+(t.done?'dn':'')+'">'+t.text+'</span>'+
+      '<div style="display:flex;gap:4px;margin-top:2px"><span class="bx '+(CB[t.cat]||'bg')+'" style="font-size:10px">'+t.cat+'</span><span class="bx '+(pr[t.pri]||'bg')+'" style="font-size:10px">'+t.pri+'</span></div></div>'+
+      '<button class="btn btns" style="margin-left:4px" onclick="tEdit('+t.id+')">Edit</button>'+
+      '<span onclick="tDl('+t.id+')" style="cursor:pointer;color:var(--txt4);padding:0 4px;font-size:16px;line-height:1;align-self:center">&#215;</span></div>';
+  }).join('') : '<span style="font-size:12px;color:var(--txt3)">None yet.</span>'; }
+  document.getElementById('tact').innerHTML  = mk(S.tasks.filter(function(t){return !t.done;}));
+  document.getElementById('tdone').innerHTML = mk(S.tasks.filter(function(t){return t.done;}));
+}
+
+// ── HABITS ───────────────────────────────────────────────────────────────
+function addHabit(){
+  var n=document.getElementById('hi').value.trim(); if(!n)return;
+  S.habits.push({name:n,days:[0,0,0,0,0,0,0]}); document.getElementById('hi').value=''; sv(); rHabits();
+}
+function hT(hi,di){ S.habits[hi].days[di]=S.habits[hi].days[di]?0:1; sv(); rHabits(); rDash(); }
+function hEdit(hi){
+  var nv=prompt('Edit habit name:',S.habits[hi].name); if(nv===null)return;
+  S.habits[hi].name=nv.trim()||S.habits[hi].name; sv(); rHabits();
+}
+function hDel(hi){
+  if(!confirm('Remove habit "'+S.habits[hi].name+'"?'))return;
+  S.habits.splice(hi,1); sv(); rHabits(); rDash();
+}
+function rHabits(){
+  document.getElementById('hlist').innerHTML = S.habits.length ? S.habits.map(function(h,hi){
+    return '<div class="row" style="align-items:center">'+
+      '<span class="rt" style="flex:1">'+h.name+'</span>'+
+      '<div style="display:flex;gap:4px;margin-right:8px">'+h.days.map(function(d,di){return '<div class="hd '+(d?'on':'')+'" onclick="hT('+hi+','+di+')"></div>';}).join('')+'</div>'+
+      '<button class="btn btns" onclick="hEdit('+hi+')">Edit</button>'+
+      '<button class="btn btns btnd" style="margin-left:3px" onclick="hDel('+hi+')">&#215;</button>'+
+    '</div>';
+  }).join('') : '<span style="font-size:12px;color:var(--txt3)">No habits yet. Add one below.</span>';
+}
+
+// ── FILTER ───────────────────────────────────────────────────────────────
+function setF(type,btn){
+  var k=type; S.fi[k]=btn.dataset.f;
+  btn.closest('.fr').querySelectorAll('.fb').forEach(function(b){b.classList.remove('on');}); btn.classList.add('on');
+  if(k==='n') rNotes(); else if(k==='s') rScripts(); else rTuts();
+}
+
+// ── NOTES ────────────────────────────────────────────────────────────────
+function addNote(){
+  var t=document.getElementById('nti').value.trim(); if(!t)return;
+  S.notes.unshift({id:S.uid++,title:t,cat:document.getElementById('ncat').value,tags:document.getElementById('ntag').value.split(',').map(function(x){return x.trim();}).filter(Boolean),body:document.getElementById('nbod').value,date:new Date().toISOString().split('T')[0]});
+  document.getElementById('nti').value=''; document.getElementById('ntag').value=''; document.getElementById('nbod').value='';
+  sv(); rNotes(); rDash(); ntf('Note saved','ok');
+}
+function nDl(id){ if(!confirm('Delete this note?'))return; S.notes=S.notes.filter(function(n){return n.id!==id;}); sv(); rNotes(); rDash(); }
+function nEdit(id){
+  var n=S.notes.find(function(x){return x.id===id;}); if(!n)return;
+  var nt=prompt('Edit title:',n.title); if(nt===null)return;
+  var nb=prompt('Edit body:',n.body); if(nb===null)return;
+  n.title=nt.trim()||n.title; n.body=nb; sv(); rNotes();
+}
+function rNotes(){
+  var q=(document.getElementById('nsq').value||'').toLowerCase(); var f=S.fi.n;
+  var items=S.notes.filter(function(n){return(f==='all'||n.cat===f)&&(!q||n.title.toLowerCase().includes(q)||n.body.toLowerCase().includes(q)||n.tags.some(function(x){return x.toLowerCase().includes(q);}));});
+  document.getElementById('nlist').innerHTML = items.length ? items.map(function(n){
+    return '<div class="nc">'+
+      '<div style="display:flex;justify-content:space-between;gap:8px">'+
+        '<div style="flex:1"><div class="ntl" onclick="xp(\'nx'+n.id+'\')">'+n.title+'</div>'+
+        '<div class="nm">'+n.date+' <span class="bx '+(CB[n.cat]||'bg')+'">'+CL[n.cat]+'</span>'+n.tags.map(function(t){return '<span class="bx bg">'+t+'</span>';}).join('')+'</div>'+
+        '<div class="np">'+esc(n.body.slice(0,120))+(n.body.length>120?'...':'')+'</div></div>'+
+        '<div style="display:flex;gap:3px;flex-shrink:0">'+
+          '<button class="btn btns" onclick="nEdit('+n.id+')">Edit</button>'+
+          '<button class="btn btns btnd" onclick="nDl('+n.id+')">&#215;</button>'+
+        '</div>'+
+      '</div>'+
+      '<div class="xp" id="nx'+n.id+'"><div class="np">'+esc(n.body)+'</div>'+
+      '<div style="display:flex;gap:6px;margin-top:0.6rem"><button class="btn btns" onclick="cp(\''+escQ(n.body)+'\')">Copy</button></div></div>'+
+    '</div>';
+  }).join('') : '<span style="font-size:12px;color:var(--txt3)">No notes yet. Add your first note above.</span>';
+}
+
+// ── SCRIPTS ──────────────────────────────────────────────────────────────
+function addScript(){
+  var t=document.getElementById('sti').value.trim(), c=document.getElementById('scod').value.trim(); if(!t||!c)return;
+  S.scripts.unshift({id:S.uid++,title:t,type:document.getElementById('stp').value,tags:document.getElementById('stag').value.split(',').map(function(x){return x.trim();}).filter(Boolean),desc:document.getElementById('sdes').value,code:c,date:new Date().toISOString().split('T')[0]});
+  document.getElementById('sti').value=''; document.getElementById('stag').value=''; document.getElementById('sdes').value=''; document.getElementById('scod').value='';
+  sv(); rScripts(); rDash(); ntf('Script saved','ok');
+}
+function sDl(id){ if(!confirm('Delete this script?'))return; S.scripts=S.scripts.filter(function(s){return s.id!==id;}); sv(); rScripts(); rDash(); }
+function sEdit(id){
+  var s=S.scripts.find(function(x){return x.id===id;}); if(!s)return;
+  var nt=prompt('Edit title:',s.title); if(nt===null)return;
+  var nd=prompt('Edit description:',s.desc||''); if(nd===null)return;
+  var nc=prompt('Edit code:',s.code); if(nc===null)return;
+  s.title=nt.trim()||s.title; s.desc=nd; s.code=nc; sv(); rScripts();
+}
+function rScripts(){
+  var q=(document.getElementById('ssq').value||'').toLowerCase(); var f=S.fi.s;
+  var items=S.scripts.filter(function(s){return(f==='all'||s.type===f)&&(!q||s.title.toLowerCase().includes(q)||s.code.toLowerCase().includes(q)||s.tags.some(function(x){return x.toLowerCase().includes(q);}));});
+  document.getElementById('slist').innerHTML = items.length ? items.map(function(s){
+    var ec=s.code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return '<div class="nc">'+
+      '<div style="display:flex;justify-content:space-between;gap:8px">'+
+        '<div style="flex:1"><div class="ntl" onclick="xp(\'sx'+s.id+'\')">'+s.title+'</div>'+
+        '<div class="nm">'+s.date+' <span class="bx '+(TB[s.type]||'bg')+'">'+TL[s.type]+'</span>'+s.tags.map(function(t){return '<span class="bx bg">'+t+'</span>';}).join('')+'</div>'+
+        (s.desc?'<div style="font-size:12px;color:var(--txt2);margin-top:2px">'+esc(s.desc)+'</div>':'')+'</div>'+
+        '<div style="display:flex;gap:3px;flex-shrink:0">'+
+          '<button class="btn btns" onclick="sEdit('+s.id+')">Edit</button>'+
+          '<button class="btn btns btnd" onclick="sDl('+s.id+')">&#215;</button>'+
+        '</div>'+
+      '</div>'+
+      '<div class="xp" id="sx'+s.id+'"><div class="cb">'+ec+'<button class="cpb" onclick="cp(\''+escQ(s.code)+'\')">Copy</button></div></div>'+
+    '</div>';
+  }).join('') : '<span style="font-size:12px;color:var(--txt3)">No scripts yet. Add your first script above.</span>';
+}
+
+// ── TUTORIALS ────────────────────────────────────────────────────────────
+function addTut(){
+  var t=document.getElementById('tti').value.trim(), b=document.getElementById('tbod').value.trim(); if(!t||!b)return;
+  S.tuts.unshift({id:S.uid++,title:t,cat:document.getElementById('tcat').value,tags:document.getElementById('ttag').value.split(',').map(function(x){return x.trim();}).filter(Boolean),difficulty:document.getElementById('tdif').value,body:b,date:new Date().toISOString().split('T')[0]});
+  document.getElementById('tti').value=''; document.getElementById('ttag').value=''; document.getElementById('tbod').value='';
+  sv(); rTuts(); rDash(); ntf('Tutorial saved','ok');
+}
+function tutDl(id){ if(!confirm('Delete this tutorial?'))return; S.tuts=S.tuts.filter(function(t){return t.id!==id;}); sv(); rTuts(); }
+function tutEdit(id){
+  var t=S.tuts.find(function(x){return x.id===id;}); if(!t)return;
+  var nt=prompt('Edit title:',t.title); if(nt===null)return;
+  var nb=prompt('Edit body:',t.body); if(nb===null)return;
+  t.title=nt.trim()||t.title; t.body=nb; sv(); rTuts();
+}
+function rTuts(){
+  var q=(document.getElementById('tsq').value||'').toLowerCase(); var f=S.fi.t;
+  var items=S.tuts.filter(function(t){return(f==='all'||t.cat===f||t.difficulty===f)&&(!q||t.title.toLowerCase().includes(q)||t.body.toLowerCase().includes(q));});
+  document.getElementById('tlist').innerHTML = items.length ? items.map(function(t){
+    return '<div class="nc">'+
+      '<div style="display:flex;justify-content:space-between;gap:8px">'+
+        '<div style="flex:1"><div class="ntl" onclick="xp(\'tx'+t.id+'\')">'+t.title+'</div>'+
+        '<div class="nm">'+t.date+' <span class="bx '+(CB[t.cat]||'bg')+'">'+CL[t.cat]+'</span><span class="bx '+(DB[t.difficulty]||'bg')+'">'+t.difficulty+'</span></div>'+
+        '<div class="np">'+esc(t.body.slice(0,120))+(t.body.length>120?'...':'')+'</div></div>'+
+        '<div style="display:flex;gap:3px;flex-shrink:0">'+
+          '<button class="btn btns" onclick="tutEdit('+t.id+')">Edit</button>'+
+          '<button class="btn btns btnd" onclick="tutDl('+t.id+')">&#215;</button>'+
+        '</div>'+
+      '</div>'+
+      '<div class="xp" id="tx'+t.id+'"><div class="np">'+esc(t.body)+'</div>'+
+      '<div style="display:flex;gap:6px;margin-top:0.6rem"><button class="btn btns" onclick="cp(\'# '+escQ(t.title)+'\\n\\n'+escQ(t.body)+'\')">Copy as MD</button></div></div>'+
+    '</div>';
+  }).join('') : '<span style="font-size:12px;color:var(--txt3)">No tutorials yet. Add your first tutorial above.</span>';
+}
+
+// ── CAREER ───────────────────────────────────────────────────────────────
+function rCareer(){
+  // Milestones
+  document.getElementById('ctl').innerHTML = milData.map(function(m,i){
+    return '<div class="tli">'+
+      '<div class="tlw"><div class="tldot" style="background:'+(S.mil[i]?'var(--grn)':m.col)+';opacity:'+(S.mil[i]?1:0.4)+'" onclick="mT('+i+')"></div>'+(i<milData.length-1?'<div class="tlv"></div>':'')+'</div>'+
+      '<div class="tlb" style="flex:1">'+
+        '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">'+
+          '<span class="tlt">'+m.title+'</span>'+
+          '<span class="bx '+(S.mil[i]?'bn':'bb')+'" style="font-size:10px">'+m.month+'</span>'+
+          (S.mil[i]?'<span class="bx bn" style="font-size:10px">done</span>':'')+
+          '<button class="btn btns" style="margin-left:auto" onclick="milEdit('+i+')">Edit</button>'+
+          '<button class="btn btns btnd" onclick="milDel('+i+')">&#215;</button>'+
+        '</div>'+
+        '<div class="tld2">'+m.desc+'</div>'+
+      '</div>'+
+    '</div>';
+  }).join('')+
+  '<div style="margin-top:0.8rem;display:flex;gap:6px;flex-wrap:wrap">'+
+    '<input id="new-mil-title" placeholder="Milestone title..." style="flex:2;min-width:140px;font-size:12px;padding:5px 8px;border:1px solid var(--brd);border-radius:5px;background:var(--bg2);color:var(--txt)"/>'+
+    '<input id="new-mil-month" placeholder="Month e.g. Month 15" style="flex:1;min-width:100px;font-size:12px;padding:5px 8px;border:1px solid var(--brd);border-radius:5px;background:var(--bg2);color:var(--txt)"/>'+
+    '<button class="btn btns btnp" onclick="milAdd()">+ Add milestone</button>'+
+  '</div>';
+
+  // Skills
+  document.getElementById('csk').innerHTML = Object.entries(S.skills).map(function(e){
+    var k=e[0],v=e[1];
+    return '<div class="row" style="border:none;padding:4px 0;align-items:center">'+
+      '<span style="font-size:12px;min-width:140px">'+k+'</span>'+
+      '<div class="pbb"><div class="pb" style="width:'+v+'%;background:var(--acc)"></div></div>'+
+      '<span class="pct">'+v+'%</span>'+
+      '<button class="btn btns btnd" style="margin-left:4px" onclick="skDn(\''+k+'\')">-5</button>'+
+      '<button class="btn btns btnp" style="margin-left:2px" onclick="skUp(\''+k+'\')">+5</button>'+
+      '<button class="btn btns" style="margin-left:2px" onclick="skEdit(\''+k+'\')" title="Rename">&#9998;</button>'+
+      '<button class="btn btns btnd" style="margin-left:2px" onclick="skDel(\''+k+'\')">&#215;</button>'+
+    '</div>';
+  }).join('')+
+  '<div style="margin-top:0.8rem;display:flex;gap:6px;flex-wrap:wrap">'+
+    '<input id="new-skill" placeholder="New skill name..." style="flex:1;font-size:12px;padding:5px 8px;border:1px solid var(--brd);border-radius:5px;background:var(--bg2);color:var(--txt)"/>'+
+    '<button class="btn btns btnp" onclick="skAdd()">+ Add skill</button>'+
+  '</div>';
+
+  // Visibility actions
+  document.getElementById('cvi').innerHTML = visActs.map(function(a,i){
+    return '<div class="row" style="align-items:center">'+
+      '<div class="ck '+(S.vis[i]?'on':'')+'" onclick="viT('+i+')">'+(S.vis[i]?'&#10003;':'')+'</div>'+
+      '<span class="rt '+(S.vis[i]?'dn':'')+'">'+a+'</span>'+
+      '<button class="btn btns" onclick="visEdit('+i+')">Edit</button>'+
+      '<button class="btn btns btnd" style="margin-left:2px" onclick="visDel('+i+')">&#215;</button>'+
+    '</div>';
+  }).join('')+
+  '<div style="margin-top:0.8rem;display:flex;gap:6px">'+
+    '<input id="new-vis" placeholder="New visibility action..." style="flex:1;font-size:12px;padding:5px 8px;border:1px solid var(--brd);border-radius:5px;background:var(--bg2);color:var(--txt)"/>'+
+    '<button class="btn btns btnp" onclick="visAdd()">+ Add</button>'+
+  '</div>';
+
+  // Score ring
+  var sc=pScore();
+  document.getElementById('cring').textContent = sc+'%';
+  var studyTotal = Object.values(S.study).reduce(function(a,b){return a+(b||0);},0);
+  var avg=Object.values(S.skills).length ? Math.round(Object.values(S.skills).reduce(function(a,b){return a+b;},0)/Object.values(S.skills).length) : 0;
+  document.getElementById('cprd').innerHTML = 'Skills avg: '+avg+'%<br>Cert progress: '+Math.min(25,Math.round(studyTotal/10.8))+'pts<br>Milestones done: '+S.mil.filter(Boolean).length+'/'+milData.length+'<br>Visibility actions: '+Object.values(S.vis).filter(Boolean).length+'/'+visActs.length;
+}
+
+// Milestone CRUD
+function mT(i){ S.mil[i]=!S.mil[i]; sv(); rCareer(); rDash(); }
+function milAdd(){
+  var t=document.getElementById('new-mil-title').value.trim();
+  var m=document.getElementById('new-mil-month').value.trim();
+  if(!t)return;
+  milData.push({title:t,month:m||'Custom',desc:'',col:'#0969da'});
+  S.mil.push(false);
+  document.getElementById('new-mil-title').value='';
+  document.getElementById('new-mil-month').value='';
+  sv(); rCareer(); ntf('Milestone added','ok');
+}
+function milEdit(i){
+  var t=prompt('Edit milestone title:',milData[i].title); if(t===null)return;
+  var d=prompt('Edit description:',milData[i].desc); if(d===null)return;
+  var m=prompt('Edit month/timeframe:',milData[i].month); if(m===null)return;
+  milData[i].title=t.trim()||milData[i].title;
+  milData[i].desc=d;
+  milData[i].month=m.trim()||milData[i].month;
+  sv(); rCareer();
+}
+function milDel(i){
+  if(!confirm('Remove milestone "'+milData[i].title+'"?'))return;
+  milData.splice(i,1); S.mil.splice(i,1); sv(); rCareer(); ntf('Milestone removed','ok');
+}
+
+// Skills CRUD
+function skUp(k){ S.skills[k]=Math.min(100,(S.skills[k]||0)+5); sv(); rCareer(); rDash(); }
+function skDn(k){ S.skills[k]=Math.max(0,(S.skills[k]||0)-5); sv(); rCareer(); rDash(); }
+function skEdit(k){
+  var nk=prompt('Rename skill:',k); if(!nk||nk.trim()===k)return;
+  var newKey=nk.trim();
+  if(S.skills[newKey]!==undefined){ntf('Skill already exists','err');return;}
+  S.skills[newKey]=S.skills[k]; delete S.skills[k]; sv(); rCareer(); rDash();
+}
+function skDel(k){
+  if(!confirm('Remove skill "'+k+'"?'))return;
+  delete S.skills[k]; sv(); rCareer(); rDash(); ntf('Skill removed','ok');
+}
+function skAdd(){
+  var n=document.getElementById('new-skill').value.trim(); if(!n)return;
+  if(S.skills[n]!==undefined){ntf('Skill already exists','err');return;}
+  S.skills[n]=50; document.getElementById('new-skill').value=''; sv(); rCareer(); ntf('Skill added at 50%','ok');
+}
+
+// Visibility CRUD
+function viT(i){ S.vis[i]=!S.vis[i]; sv(); rCareer(); rDash(); }
+function visAdd(){
+  var n=document.getElementById('new-vis').value.trim(); if(!n)return;
+  visActs.push(n); document.getElementById('new-vis').value=''; sv(); rCareer(); ntf('Visibility action added','ok');
+}
+function visEdit(i){
+  var nv=prompt('Edit action:',visActs[i]); if(nv===null)return;
+  visActs[i]=nv.trim()||visActs[i]; sv(); rCareer();
+}
+function visDel(i){
+  if(!confirm('Remove "'+visActs[i]+'"?'))return;
+  visActs.splice(i,1); delete S.vis[i]; sv(); rCareer(); ntf('Action removed','ok');
+}
+
+// ── EXPAND ───────────────────────────────────────────────────────────────
+function xp(id){ var el=document.getElementById(id); if(el) el.style.display=el.style.display==='block'?'none':'block'; }
+
+// ── HELPERS ──────────────────────────────────────────────────────────────
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escQ(s){ return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n'); }
+function cp(text){
+  var clean = text.replace(/\\n/g,'\n').replace(/\\'/g,"'").replace(/\\\\/g,'\\');
+  navigator.clipboard.writeText(clean).then(function(){ ntf('Copied to clipboard','ok'); }).catch(function(){ ntf('Copy failed','err'); });
+}
+
+// ── EXPORT ───────────────────────────────────────────────────────────────
+function toMD(item,type){
+  if(type==='note') return '---\ntitle: "'+item.title+'"\ncategory: '+item.cat+'\ntags: ['+item.tags.map(function(t){return '"'+t+'"';}).join(', ')+']\ndate: '+item.date+'\ntype: note\n---\n\n# '+item.title+'\n\n'+item.body+'\n';
+  if(type==='script') return '---\ntitle: "'+item.title+'"\ntype: script\nlanguage: '+item.type+'\ntags: ['+item.tags.map(function(t){return '"'+t+'"';}).join(', ')+']\ndate: '+item.date+'\n---\n\n# '+item.title+'\n\n'+(item.desc||'')+'\n\n```'+(item.type==='ps'?'powershell':'bash')+'\n'+item.code+'\n```\n';
+  if(type==='tutorial') return '---\ntitle: "'+item.title+'"\ncategory: '+item.cat+'\ntags: ['+item.tags.map(function(t){return '"'+t+'"';}).join(', ')+']\ndifficulty: '+item.difficulty+'\ndate: '+item.date+'\ntype: tutorial\n---\n\n# '+item.title+'\n\n'+item.body+'\n';
+}
+function dl(name,content){ var a=document.createElement('a'); a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(content); a.download=name; a.click(); }
+function doObsidian(){
+  var out='# Security Career Command Centre — Obsidian Export\n_'+new Date().toLocaleDateString()+'_\n\n';
+  S.notes.forEach(function(n){out+='## notes/'+n.title.replace(/[^a-zA-Z0-9 ]/g,'').trim()+'.md\n\n'+toMD(n,'note')+'\n---\n\n';});
+  S.scripts.forEach(function(s){out+='## scripts/'+s.title.replace(/[^a-zA-Z0-9 ]/g,'').trim()+'.md\n\n'+toMD(s,'script')+'\n---\n\n';});
+  S.tuts.forEach(function(t){out+='## tutorials/'+t.title.replace(/[^a-zA-Z0-9 ]/g,'').trim()+'.md\n\n'+toMD(t,'tutorial')+'\n---\n\n';});
+  dl('security-cc-obsidian-'+new Date().toISOString().split('T')[0]+'.md', out);
+  ntf('Obsidian export downloaded','ok');
+}
+function doOneNote(){
+  var out='SECURITY CAREER COMMAND CENTRE\n'+new Date().toLocaleDateString()+'\n\n=== NOTES ===\n\n';
+  S.notes.forEach(function(n){out+=n.title+'\n'+n.date+' | '+n.cat+' | '+n.tags.join(', ')+'\n'+n.body+'\n\n---\n\n';});
+  out+='=== SCRIPTS ===\n\n'; S.scripts.forEach(function(s){out+=s.title+'\n'+s.date+' | '+s.type+'\n'+(s.desc||'')+'\n\n'+s.code+'\n\n---\n\n';});
+  out+='=== TUTORIALS ===\n\n'; S.tuts.forEach(function(t){out+=t.title+'\n'+t.date+' | '+t.cat+' | '+t.difficulty+'\n'+t.body+'\n\n---\n\n';});
+  navigator.clipboard.writeText(out).then(function(){ntf('Copied — paste into OneNote','ok');}).catch(function(){dl('onenote-export.txt',out); ntf('Downloaded as .txt','ok');});
+}
+function doCheatsheet(){
+  var md='# Security Script Cheat Sheet\n_'+new Date().toLocaleDateString()+'_\n\n';
+  ['ps','az','cmd','net','sec'].forEach(function(type){
+    var items=S.scripts.filter(function(s){return s.type===type;}); if(!items.length)return;
+    md+='## '+TL[type]+'\n\n';
+    items.forEach(function(s){md+='### '+s.title+'\n'+(s.desc?s.desc+'\n':'')+'\n```'+(type==='ps'?'powershell':'bash')+'\n'+s.code+'\n```\n\n';});
+  });
+  dl('script-cheatsheet-'+new Date().toISOString().split('T')[0]+'.md', md);
+  ntf('Cheat sheet downloaded','ok');
+}
+function doExportAll(){
+  var data={tasks:S.tasks,habits:S.habits,study:S.study,cp:S.cp,notes:S.notes,scripts:S.scripts,tuts:S.tuts,skills:S.skills,vis:S.vis,mil:S.mil,uid:S.uid,exported:new Date().toISOString()};
+  dl('cc-backup-'+new Date().toISOString().split('T')[0]+'.json', JSON.stringify(data,null,2));
+  ntf('Local backup downloaded','ok');
+}
+function doImport(e){
+  var f=e.target.files[0]; if(!f)return;
+  var r=new FileReader(); r.onload=function(ev){
+    try{
+      var d=JSON.parse(ev.target.result);
+      ['tasks','habits','study','cp','notes','scripts','tuts','skills','vis','mil','uid'].forEach(function(k){if(d[k]!==undefined)S[k]=d[k];});
+      sv(); rDash(); ntf('Data imported successfully','ok');
+    }catch(err){ntf('Import failed — invalid file','err');}
+  }; r.readAsText(f);
+}
+
+// ── DARK MODE ────────────────────────────────────────────────────────────
+function toggleDark(){
+  var isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('cc3_dark', isDark ? '1' : '0');
+}
+function applyDark(){
+  if(localStorage.getItem('cc3_dark')==='1') document.body.classList.add('dark');
+}
+
+// ── TAB CUSTOMISATION ────────────────────────────────────────────────────
+var TAB_DEFS = [
+  {id:'dash',  label:'Dashboard',   fixed:true},
+  {id:'certs', label:'Certifications'},
+  {id:'tasks', label:'Tasks'},
+  {id:'habits',label:'Habits'},
+  {id:'notes', label:'Notes'},
+  {id:'scripts',label:'Scripts'},
+  {id:'tuts',  label:'Tutorials'},
+  {id:'career',label:'Career track'},
+  {id:'exp',   label:'Export'},
+];
+
+function loadTabSettings(){
+  try{
+    var saved = JSON.parse(localStorage.getItem('cc3_tabs')||'null');
+    if(saved){
+      saved.forEach(function(t){
+        var def = TAB_DEFS.find(function(d){return d.id===t.id;});
+        if(def){ def.label=t.label; def.hidden=t.hidden||false; }
+      });
+    }
+  }catch(e){}
+}
+
+function applyTabSettings(){
+  var navBtns = document.querySelectorAll('.nav .nb');
+  var ids = ['dash','certs','tasks','habits','notes','scripts','tuts','career','exp'];
+  ids.forEach(function(id,i){
+    var def = TAB_DEFS.find(function(d){return d.id===id;});
+    if(def && navBtns[i]){
+      navBtns[i].textContent = def.label;
+      navBtns[i].classList.toggle('hidden-tab', def.hidden||false);
+    }
+  });
+}
+
+function showTabsModal(){
+  var list = document.getElementById('tab-edit-list');
+  list.innerHTML = TAB_DEFS.map(function(t,i){
+    return '<div class="tab-edit-row">'+
+      '<input type="text" id="tl-'+t.id+'" value="'+t.label+'" placeholder="Tab name" '+(t.fixed?'readonly style="opacity:0.5"':'')+'/>' +
+      '<button class="tog '+(t.hidden?'':'on')+'" id="tv-'+t.id+'" '+(t.fixed?'disabled style="opacity:0.4"':'')+' onclick="this.classList.toggle(\'on\')">'+
+      '</button>'+
+      '<span style="font-size:11px;color:var(--txt3);min-width:36px">'+(t.fixed?'always':'show')+'</span>'+
+      '</div>';
+  }).join('');
+  document.getElementById('tabs-modal').classList.add('show');
+}
+
+function closeTabsModal(){
+  document.getElementById('tabs-modal').classList.remove('show');
+}
+
+function saveTabSettings(){
+  TAB_DEFS.forEach(function(t){
+    if(!t.fixed){
+      var inp = document.getElementById('tl-'+t.id);
+      var tog = document.getElementById('tv-'+t.id);
+      if(inp) t.label = inp.value.trim() || t.label;
+      if(tog) t.hidden = !tog.classList.contains('on');
+    }
+  });
+  localStorage.setItem('cc3_tabs', JSON.stringify(TAB_DEFS.map(function(t){return {id:t.id,label:t.label,hidden:t.hidden||false};})));
+  applyTabSettings();
+  closeTabsModal();
+  ntf('Tab settings saved','ok');
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────
+(function(){
+  applyDark();
+  loadTabSettings();
+  applyTabSettings();
+  // Try loading local cache first for instant display
+  try{
+    var cached = localStorage.getItem('cc3_data');
+    if(cached){
+      var d = JSON.parse(cached);
+      ['tasks','habits','study','cp','notes','scripts','tuts','skills','vis','mil','uid'].forEach(function(k){if(d[k]!==undefined)S[k]=d[k];});
+      if(d.certMeta){ Object.keys(d.certMeta).forEach(function(k){ certMeta[k]=d.certMeta[k]; }); }
+      if(d.milData){ milData.length=0; d.milData.forEach(function(m){milData.push(m);}); }
+      if(d.visActs){ visActs.length=0; d.visActs.forEach(function(v){visActs.push(v);}); }
+    }
+  }catch(e){}
+  rDash(); rTasks(); rHabits();
+  // Then try to load fresh data from GitHub
+  if(getToken()){
+    loadFromGitHub();
+  } else {
+    setSyncStatus('offline','Not connected');
+  }
+})();
+</script>
+</body>
+</html>
