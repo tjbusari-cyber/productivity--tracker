@@ -108,7 +108,7 @@
         "MFA",
         "Zero Trust"
       ],
-      "body": "Block legacy auth ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ eliminates basic auth protocols\nRequire MFA for all admin accounts\nRequire compliant Intune-enrolled device\nBlock risky sign-ins via Identity Protection integration\n\nAlways test with the What-If tool before setting to Enforce!",
+      "body": "Block legacy auth ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ eliminates basic auth protocols\nRequire MFA for all admin accounts\nRequire compliant Intune-enrolled device\nBlock risky sign-ins via Identity Protection integration\n\nAlways test with the What-If tool before setting to Enforce!",
       "date": "2026-04-15"
     }
   ],
@@ -192,7 +192,8 @@
     false
   ],
   "uid": 300,
-  "lastSync": "2026-04-28T10:04:49.336Z",
+  "lastSync": "2026-04-28T10:57:48.270Z",
+  "wGoals": [],
   "certMeta": {
     "az104": {
       "label": "AZ-104",
@@ -309,5 +310,29 @@
     "Build internal automation or security tool",
     "Submit a conference talk proposal",
     "Publish LinkedIn article on cloud security"
-  ]
+  ],
+  "labels": {
+    "appTitle": "SecureTrack",
+    "focus": "&#9201; Focus timer (Pomodoro)",
+    "streak": "&#128293; Streaks &amp; momentum",
+    "certprog": "Certification progress",
+    "roadmap": "18-month roadmap",
+    "habits": "Habits — this week",
+    "promo": "Promotion readiness — 4 pillars",
+    "timeline": "Milestone timeline",
+    "skills": "Skills tracker",
+    "vis": "Visibility actions",
+    "promocard": "Promotion readiness",
+    "pillar1": "Technical",
+    "pillar2": "Certifications",
+    "pillar3": "Leadership",
+    "pillar4": "Visibility",
+    "todayTasks": "Today's tasks",
+    "recentNotes": "Recent notes",
+    "recentScripts": "Recent scripts",
+    "weeklyBtn": "Weekly review",
+    "roadmapSpan": "18-month journey",
+    "scoreLabel": "18-month target",
+    "milLength": "18 months"
+  }
 }
