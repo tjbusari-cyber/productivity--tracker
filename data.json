@@ -187,11 +187,10 @@
     false,
     false,
     false,
-    false,
     false
   ],
   "uid": 300,
-  "lastSync": "2026-04-28T11:00:22.393Z",
+  "lastSync": "2026-04-28T11:00:28.008Z",
   "wGoals": [],
   "certMeta": {
     "az104": {
@@ -284,12 +283,6 @@
       "month": "Month 12",
       "desc": "Present certs, projects, leadership evidence.",
       "col": "#9a6700"
-    },
-    {
-      "title": "Manager promotion",
-      "month": "Month 18",
-      "desc": "Target achieved. Lead security engineering team.",
-      "col": "#116329"
     }
   ],
   "visActs": [
