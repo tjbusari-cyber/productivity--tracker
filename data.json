@@ -108,7 +108,7 @@
         "MFA",
         "Zero Trust"
       ],
-      "body": "Block legacy auth ÃÂ¢ÃÂÃÂ eliminates basic auth protocols\nRequire MFA for all admin accounts\nRequire compliant Intune-enrolled device\nBlock risky sign-ins via Identity Protection integration\n\nAlways test with the What-If tool before setting to Enforce!",
+      "body": "Block legacy auth ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ eliminates basic auth protocols\nRequire MFA for all admin accounts\nRequire compliant Intune-enrolled device\nBlock risky sign-ins via Identity Protection integration\n\nAlways test with the What-If tool before setting to Enforce!",
       "date": "2026-04-15"
     }
   ],
@@ -192,7 +192,7 @@
     false
   ],
   "uid": 300,
-  "lastSync": "2026-04-17T15:26:27.375Z",
+  "lastSync": "2026-04-28T10:04:49.336Z",
   "certMeta": {
     "az104": {
       "label": "AZ-104",
