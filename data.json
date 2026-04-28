@@ -188,11 +188,10 @@
     false,
     false,
     false,
-    false,
     false
   ],
   "uid": 300,
-  "lastSync": "2026-04-28T10:59:26.477Z",
+  "lastSync": "2026-04-28T11:00:22.393Z",
   "wGoals": [],
   "certMeta": {
     "az104": {
@@ -285,12 +284,6 @@
       "month": "Month 12",
       "desc": "Present certs, projects, leadership evidence.",
       "col": "#9a6700"
-    },
-    {
-      "title": "Promotion conversation",
-      "month": "Month 14",
-      "desc": "Formal discussion. Evidence portfolio ready.",
-      "col": "#116329"
     },
     {
       "title": "Manager promotion",
